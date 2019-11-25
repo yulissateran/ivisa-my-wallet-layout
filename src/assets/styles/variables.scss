@@ -18,15 +18,5 @@ $font-family-secondary: "Roboto", sans-serif;
 $border-light: 1px solid $gray;
 $border-dark: 0.9px solid $dark-gray;
 $box-shadow: 0 0 5px 3px $gray-ref, 0 0 5px 10px $gray;
-$breakpoints: (
-  xs: 0,
-  sm: 480px,
-  md: 768px,
-  lg: 1024px
-);
-
-$container-max-widths: (
-  sm: 420px,
-  md: 720px,
-  lg: 960px
-);
+$error-color: red;
+$border-error: 1px solid $error-color;

@@ -1,0 +1,17 @@
+@import "./variables-grid.scss";
+
+.wrapper {
+  margin: 0 auto;
+}
+
+@media only screen and (min-width: map-get($breakpoints, md)) {
+  .wrapper {
+    max-width: map-get($container-max-widths, md);
+  }
+}
+
+@media only screen and (min-width: map-get($breakpoints, lg)) {
+  .wrapper {
+    max-width: map-get($container-max-widths, lg);
+  }
+}

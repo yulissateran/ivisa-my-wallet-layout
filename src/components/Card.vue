@@ -49,6 +49,7 @@
 
 <style scoped lang="scss">
 @import "../assets/styles/variables.scss";
+@import "../assets/styles/variables-grid.scss";
 @import "../assets/styles/reset.scss";
 // @import "../assets/styles/buttons.scss";
 // @import "../assets/styles/text.scss";
@@ -122,11 +123,6 @@
   }
 }
 @media only screen and (min-width: map-get($breakpoints, md)) {
-  .wrapper {
-    max-width: map-get($container-max-widths, md);
-    margin: 0 auto;
-  }
-
   .container-cards {
     padding: 16px 25px;
   }
