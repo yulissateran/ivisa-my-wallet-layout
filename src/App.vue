@@ -1,18 +1,31 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/images/logo.png"> -->
-    <HelloWorld msg="My cards"/>
+    <!-- <HelloWorld msg="My cards"/> -->
+    <!-- <Modal type="changeToDefault"  v-on:close="closeModal" /> -->
+    <!-- <Modal typeAction="remove" /> -->
+    <Card  />
+
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// import HelloWorld from './components/HelloWorld.vue'
+// import Modal from './components/Modal.vue'
+import Card from './components/Card.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
-  }
+    // HelloWorld,
+    // Modal,
+Card
+  }, 
+  methods: {
+    closeModal(){
+      alert('CLOSE EMIT!!');
+    }
+  }    
+
 }
 </script>
 
