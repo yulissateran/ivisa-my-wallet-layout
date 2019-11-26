@@ -97,6 +97,7 @@ import { required, minLength, numeric, maxLength  } from 'vuelidate/lib/validato
     name: 'Form',
     props: [],
     mounted () {
+      this.$refs.name.focus();
     },
     data () {
       return {
