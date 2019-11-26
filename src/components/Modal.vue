@@ -27,7 +27,6 @@
 
 <script lang="js">
 /* eslint-disable */
-
   export default  {
     name: 'modal',
     props: ['type',
@@ -36,9 +35,6 @@
             'iconSource',
             'iconDescription'
     ],
-    // mounted () {
-
-    // },
     data () {
       return {
 
@@ -92,7 +88,6 @@
   border-radius: 3px;
   padding: 10px 25px 25px 25px;
   margin: 0 10px;
-  margin-top: 50px;
 }
 .modal__header span {
   position: relative;

@@ -3,7 +3,7 @@
     margin: 6px 0;
     font-weight: bold;
     font-size: 18px;
-    border-radius: 13px;
+    border-radius: $size-radius-buttons;
     width: 100%;
     height: 45px;
   }
@@ -11,7 +11,7 @@
   .main-button {
     @extend .base-button;
     border: none;
-    color: white;
+    color: #ffff;
     background-color: $green;
   }
   .secondary-button {

@@ -1,9 +1,9 @@
 <template lang="html">
   <div class="add-card">
-    <div class="add-card__title">
-      <h2>+ Add new card</h2>
+    <div v-on:click="showForm" class="add-card__title">
+      <h2 >+ Add new card</h2>
     </div>
-    <div class="add-card__body">
+    <div class="add-card__body" v-if="isVisibleForm">
       <div class="add-card__header">
         <div class="add-card__description">
           <img src="../assets/images/ok-green-ico.svg" alt="check green icon" />
@@ -33,50 +33,15 @@ import Form from "./Form.vue";
     },
     data () {
       return {
-       errorMessage: 'Field required',
-       card: {
-         number: null,
-         name: '',
-         expYear: null,
-         expMonth: null,
-         securityCode: null,
-       },
-       form: {
-         errors: [],
-         controls: {
-          name: {
-           required: true,
-           value: '',
-           errors: null,
-           invalid: false,
-         },
-         number: {
-           required: true,
-           value: null,
-           errors: null,
-         },
-        expMonth: {
-           required: true,
-           value: null,
-           errors: null,
-         },
-         expYear: {
-           required: true,
-           value: null,
-           errors: null,
-         },
-         securityCode: {
-           required: true,
-           value: null,
-           errors: null,
-         },
-         }
-       }
+        isVisibleForm: false,
       }
     },
     methods: {
     newCard(event){
          this.$emit('newCard', event);
+    },
+    showForm(){
+      this.isVisibleForm =  !this.isVisibleForm;
     }
     },
     computed: {
@@ -86,6 +51,7 @@ import Form from "./Form.vue";
 </script>
 
 <style scoped lang="scss">
+@import "../assets/styles/reset.scss";
 @import "../assets/styles/variables-grid.scss";
 @import "../assets/styles/variables.scss";
 @import "../assets/styles/text.scss";
@@ -98,6 +64,7 @@ import Form from "./Form.vue";
   border-radius: $size-radius-card;
 }
 .add-card__title {
+  cursor: pointer;
   padding: 20px 25px;
 }
 .add-card__title > h2 {

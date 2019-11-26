@@ -1,29 +1,3 @@
-      <!-- <img class="ok-icon" src="../assets/images/ok-grey-ico.svg" alt /> -->
-<!-- <template lang="html">
-  <div class="card">
-    <div class="card__icon">
-      <img class="ok-icon" src="../assets/images/ok-green-ico.svg" alt />
-    </div>
-    <div class="card__body">
-      <div class="container-img">
-        <img src="../assets/images/visa-card-logo.svg" alt />
-      </div>
-      <div class="description">
-        <span class="description__title"
-          >American Express &#8226;&#8226;&#8226;&#8226;
-          &#8226;&#8226;&#8226;&#8226; &#8226;&#8226;&#8226;&#8226; 7015</span
-        >
-        <span class="description__subtitle">Ex.Date: 10/2023</span>
-      </div>
-      <div class="actions">
-        <button class="actions__button actions__button--remove">Remove</button>
-        <button class="actions__button actions__button--default">
-          Default
-        </button>
-      </div>
-    </div>
-  </div>
-</template> -->
 <template lang="html">
   <div class="card">
     <div class="card__icon">
@@ -58,7 +32,6 @@
     },
     data () {
       return {
-
       }
     },
     methods: {
@@ -126,10 +99,10 @@
     align-items: start;
     text-align: start;
     margin: 15px 0 20px 0;
-    color: $dark-gray;
+    color: $dark-gray-light;
   }
   .description__subtitle {
-    font-size: 12.5px;
+    font-size: 12px;
   }
   .actions {
     padding-left: 5px;
@@ -143,13 +116,19 @@
     justify-content: space-between;
     border: none;
     border-bottom: 2px solid $dark-light-gray;
+    // border-bottom: 2px solid $dark-gray-light;
     background: transparent;
     font-weight: bold;
     color: $dark-light-gray;
+    // color: $dark-gray-light;
   }
 
   .actions__button--default {
     color: $second-blue;
+    // Boton subrayado Default: Open Sans Bold #5b73c1 (Active opacity 40%)
+  }
+  .actions__button:active {
+    opacity: 40%;
   }
 }
 @media only screen and (min-width: map-get($breakpoints, md)) {

@@ -99,7 +99,7 @@
         src="../assets/images/sectigo-trust-logo.png"
         alt
       />
-      <button v-on:click="send" type="button">Submit payment</button>
+      <button v-on:click="send" type="button">Add card</button>
     </div>
   </form>
 </template>
@@ -107,7 +107,6 @@
 <script lang="js">
 /* eslint-disable */
 import { required, minLength, numeric, maxLength  } from 'vuelidate/lib/validators'
-
   export default  {
     name: 'Form',
     props: [],
@@ -291,7 +290,7 @@ import { required, minLength, numeric, maxLength  } from 'vuelidate/lib/validato
   display: block;
   width: 100%;
   border: $border-dark;
-  border-radius: $size-radius-card;
+  border-radius: $size-radius-form-controls;
   margin-top: 10px;
 }
 .form__body input.has-error,
@@ -311,6 +310,7 @@ import { required, minLength, numeric, maxLength  } from 'vuelidate/lib/validato
 
 label {
   font-size: 14px;
+  font-weight: bold;
   font-family: $font-family-secondary;
   text-align: start;
   display: block;

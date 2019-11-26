@@ -10,7 +10,7 @@ import Wallet from "./Wallet.vue";
 import Navbar from "./Navbar.vue";
 
   export default  {
-    name: 'src-components-main',
+    name: 'Main',
     components: {
       Wallet,
       Navbar
@@ -31,8 +31,6 @@ import Navbar from "./Navbar.vue";
 
     }
 }
-
-
 </script>
 
 <style scoped lang="scss">

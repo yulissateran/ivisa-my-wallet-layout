@@ -49,6 +49,7 @@
 @import "../assets/styles/variables-grid.scss";
 @import "../assets/styles/variables.scss";
 @import "../assets/styles/reset.scss";
+@import "../assets/styles/grid.scss";
 
 .nav {
   border-bottom: $border-light;

@@ -23,7 +23,6 @@
       v-on:close="closeModal"
       v-on:do="doActionInCard"
     />
-    <!-- <Modal   :type="modal.type" v-on:close="closeModal" v-on:do="doActionInCard" /> -->
   </div>
 </template>
 
@@ -102,7 +101,6 @@ import AddCard from "./AddCard.vue";
          this.defaultCardName = name;
        },
        doActionInCard(action){
-         console.log(action)
           switch (action) {
             case 'remove':
               this.removeCard(this.selectedCardName);
@@ -114,7 +112,6 @@ import AddCard from "./AddCard.vue";
           this.closeModal();
        },
        openModal(action){
-         console.log('action', action)
          this.currentModal = this.modal.actions[action];
          this.$set(this.modal, 'isVisible', true)
        },
