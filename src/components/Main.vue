@@ -4,7 +4,6 @@
       <Wallet />
   </section>
 </template>
-
 <script lang="js">
 import Wallet from "./Wallet.vue";
 import Navbar from "./Navbar.vue";

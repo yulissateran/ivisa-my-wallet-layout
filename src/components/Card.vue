@@ -1,20 +1,42 @@
 <template lang="html">
   <div class="card">
     <div class="card__icon">
-      <img v-if="isDefault" class="ok-icon" src="../assets/images/ok-green-ico.svg" alt="" />
-      <img v-if="!isDefault" class="ok-icon" src="../assets/images/ok-grey-ico.svg" alt />
+      <img
+        v-if="isDefault"
+        class="ok-icon"
+        src="../assets/images/ok-green-ico.svg"
+        alt=""
+      />
+      <img
+        v-if="!isDefault"
+        class="ok-icon"
+        src="../assets/images/ok-grey-ico.svg"
+        alt
+      />
     </div>
     <div class="card__body">
       <div class="container-img">
-        <img src="../assets/images/visa-card-logo.svg" alt />
+        <img :src="iconUrl" alt />
       </div>
       <div class="description">
-        <span class="description__title">{{name}} <span v-html="encodeNumber"></span></span>
-        <span class="description__subtitle">Ex.Date: {{expMonth}}/{{expYear}}</span>
+        <span class="description__title"
+          >{{ name }} <span v-html="encodeNumber"></span
+        ></span>
+        <span class="description__subtitle"
+          >Ex.Date: {{ expMonth }}/{{ expYear }}</span
+        >
       </div>
       <div class="actions">
-        <button v-on:click="handleRemove" class="actions__button actions__button--remove">Remove</button>
-        <button v-on:click="handleChangeToDefault"  class="actions__button actions__button--default">
+        <button
+          v-on:click="handleRemove"
+          class="actions__button actions__button--remove"
+        >
+          Remove
+        </button>
+        <button
+          v-on:click="handleChangeToDefault"
+          class="actions__button actions__button--default"
+        >
           Default
         </button>
       </div>
@@ -26,7 +48,7 @@
 /* eslint-disable */
   export default  {
     name: 'Card',
-    props: [ 'name', 'encodeNumber', 'expMonth','expYear', 'defaultCardName'],
+    props: [ 'name', 'encodeNumber', 'expMonth','expYear', 'defaultCardName', 'icon'],
     mounted () {
     },
     data () {
@@ -44,7 +66,10 @@
     computed: {
       isDefault(){
         return this.defaultCardName === this.name;
-      }
+      },
+      iconUrl() {
+          return require('../assets/images/' + this.icon) // the module request
+     }
     }
 }
 </script>

@@ -57,7 +57,6 @@ import Form from "./Form.vue";
 @import "../assets/styles/text.scss";
 @import "../assets/styles/buttons.scss";
 
-
 .add-card {
   margin-top: 13px;
   box-shadow: $box-shadow;
@@ -107,10 +106,9 @@ import Form from "./Form.vue";
   height: 35px;
 }
 @media only screen and (min-width: map-get($breakpoints, sm)) {
-
-.add-card__body {
-  padding: 25px;
-}
+  .add-card__body {
+    padding: 25px;
+  }
 }
 @media only screen and (min-width: map-get($breakpoints, md)) {
   .add-card__header {

@@ -54,7 +54,8 @@ import AddCard from "./AddCard.vue";
             expMonth: '12',
             expYear: '2019',
             securityCode: 386,
-            encodeNumber: this.getEncodeNumberCard('5677 7754 5434 4536')
+            encodeNumber: this.getEncodeNumberCard('5677 7754 5434 4536'),
+            icon: 'visa-card-logo.svg',
           }
         ],
         modal: {
@@ -87,9 +88,36 @@ import AddCard from "./AddCard.vue";
         const encode = `&#8226;&#8226;&#8226;&#8226; &#8226;&#8226;&#8226;&#8226; &#8226;&#8226;&#8226;&#8226;`;
          return encode + number.slice(14);
       },
-       addCard(event){
+      getCardIcon(number){
+        let imageName = '';
          /*starst with: 3 american express, 4  Visa,  5  MastrCard and  6  Discover.*/
-         this.cards.push({...event, encodeNumber: this.getEncodeNumberCard(event.number)})
+        switch (Number(number[0])) {
+          case 3:
+            imageName = 'amex-card-logo.svg';
+            break;
+          case 4:
+            imageName = 'visa-card-logo.svg';
+          break;
+            case 5:
+            imageName = 'mastercard-logo.svg';
+          break;
+            case 6:
+            imageName = 'discover-card-ico.jpg';
+            break;
+          default:
+            imageName = 'visa-card-logo.svg';
+            break;
+        }
+        return imageName;
+
+      },
+       addCard(event){
+         this.cards.push({
+           ...event, 
+           encodeNumber: this.getEncodeNumberCard(event.number),
+           icon: this.getCardIcon(event.number)
+          })
+          console.log('this.cards', this.cards);
        },
 
        handleRemove(name){
@@ -158,8 +186,7 @@ import AddCard from "./AddCard.vue";
 }
 @media only screen and (min-width: map-get($breakpoints, sm)) {
   .container-cards {
-  padding: 20px;
+    padding: 20px;
   }
 }
-
 </style>

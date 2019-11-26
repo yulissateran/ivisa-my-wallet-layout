@@ -11,6 +11,8 @@
           v-model="name"
           type="text"
           id="cardName"
+          maxLength="25"
+          v-on:blur="setFormatName"
         />
       </label>
       <label for="cardNumber" class="control-lg">
@@ -29,7 +31,7 @@
           class="invalid-feedback"
           v-if="
             $v.number.$error &&
-              !$v.number.min &&
+              !$v.number.min && $v.number.max &&
               this.number &&
               this.number.length
           "
@@ -73,6 +75,7 @@
           v-model="securityCode"
           type="text"
           v-on:input="formatSecurityCode"
+          maxLength="4"
 
         />
       </label>
@@ -167,7 +170,9 @@ import { required, minLength, numeric, maxLength  } from 'vuelidate/lib/validato
       },
        securityCode: {
         required,
-        numeric
+        numeric,
+         minLength: minLength(3),
+        maxLength: maxLength(4),
       }
     },
     methods: {
@@ -203,7 +208,7 @@ import { required, minLength, numeric, maxLength  } from 'vuelidate/lib/validato
       },
       sliceCardNumber(string){
         if(string && string.length > 16) {
-          string = string.slice(0,20);
+          string = string.slice(0,17);
         }
         return string;
       },
@@ -244,6 +249,12 @@ import { required, minLength, numeric, maxLength  } from 'vuelidate/lib/validato
           }
           this.securityCode = formatedSecurityCode;
         })
+      },
+      setFormatName(){
+        if(this.name){
+          console.log(this.name)
+          this.name = this.name [0].toUpperCase() + this.name.slice(1);
+        }
       }
     },
     computed: {

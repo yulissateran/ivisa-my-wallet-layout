@@ -49,7 +49,6 @@
      },
      doAction() {
         this.$emit('do',this.type);
-        console.log(this.type)
      }
     },
     computed: {
@@ -76,6 +75,7 @@
   top: 0;
   bottom: 0;
   left: 0;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -86,10 +86,11 @@
   width: 100%;
   height: auto;
   border-radius: 3px;
-  padding: 10px 25px 25px 25px;
-  margin: 0 10px;
+  padding: 10px 15px;
+  margin: 0 5px;
 }
 .modal__header span {
+  cursor: pointer;
   position: relative;
   line-height: 0.6;
   font-size: 45px;
@@ -128,6 +129,9 @@
 }
 
 @media only screen and (min-width: map-get($breakpoints, sm)) {
+  .modal {
+  padding: 10px 25px 25px 25px;
+  }
   .modal__footer {
     flex-direction: row;
   }

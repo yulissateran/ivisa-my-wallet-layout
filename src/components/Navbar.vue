@@ -63,12 +63,12 @@
   position: relative;
   bottom: -1px;
   border: $border-light;
-  padding: 10px 0;
+  padding: 10px 15px;
   opacity: 0.5;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1;
+  cursor: pointer;
 }
 .nav__item span {
   display: none;
@@ -83,7 +83,6 @@
   border-top: 2px solid $dark-green;
   opacity: 1;
 }
-
 
 @media only screen and (min-width: map-get($breakpoints, sm)) {
   .nav__item {
