@@ -50,10 +50,11 @@ import AddCard from "./AddCard.vue";
         cards: [
           {
             name: 'American Express',
-            number: '.... .... .... 4536',
+            number: '5677 7754 5434 4536',
             expMonth: '12',
             expYear: '2019',
             securityCode: 386,
+            encodeNumber: this.getEncodeNumberCard('5677 7754 5434 4536')
           }
         ],
         modal: {
@@ -82,8 +83,13 @@ import AddCard from "./AddCard.vue";
       }
     },
     methods: {
+      getEncodeNumberCard(number){
+        const encode = `&#8226;&#8226;&#8226;&#8226; &#8226;&#8226;&#8226;&#8226; &#8226;&#8226;&#8226;&#8226;`;
+         return encode + number.slice(14);
+      },
        addCard(event){
-         this.cards.push(event)
+         /*starst with: 3 american express, 4  Visa,  5  MastrCard and  6  Discover.*/
+         this.cards.push({...event, encodeNumber: this.getEncodeNumberCard(event.number)})
        },
 
        handleRemove(name){
@@ -132,20 +138,28 @@ import AddCard from "./AddCard.vue";
 @import "../assets/styles/buttons.scss";
 @import "../assets/styles/text.scss";
 
+.wallet {
+  margin: 40px 0;
+}
 .wallet__cards {
-  margin-top: 50px;
   box-shadow: $box-shadow;
   border-radius: $size-radius-card;
 }
 
 .container-cards {
   padding: 10px;
+  border-top: $border-light;
 }
 .title {
   padding: 25px;
-  border-bottom: $border-light;
 }
 .title > h2 {
   @extend .light-title;
 }
+@media only screen and (min-width: map-get($breakpoints, sm)) {
+  .container-cards {
+  padding: 20px;
+  }
+}
+
 </style>

@@ -1,5 +1,5 @@
 @import "./variables.scss";
-input,
+// input,
 button {
   outline: none;
 }
@@ -17,6 +17,12 @@ button {
   cursor: pointer;
 }
 
-input {
+input, textarea, select {
   padding: 4px 0 4px 12px;
 }
+
+.base-control:focus {
+  box-shadow: 0 0 0 1px $second-blue;
+  border-color: $second-blue;
+}
+

@@ -9,7 +9,7 @@
         <img src="../assets/images/visa-card-logo.svg" alt />
       </div>
       <div class="description">
-        <span class="description__title">{{name}} {{number}}</span>
+        <span class="description__title">{{name}} <span v-html="encodeNumber"></span></span>
         <span class="description__subtitle">Ex.Date: {{expMonth}}/{{expYear}}</span>
       </div>
       <div class="actions">
@@ -26,9 +26,8 @@
 /* eslint-disable */
   export default  {
     name: 'Card',
-    props: [ 'name', 'number', 'expMonth','expYear', 'defaultCardName'],
+    props: [ 'name', 'encodeNumber', 'expMonth','expYear', 'defaultCardName'],
     mounted () {
-      console.log(this)
     },
     data () {
       return {
@@ -54,8 +53,6 @@
 @import "../assets/styles/variables.scss";
 @import "../assets/styles/variables-grid.scss";
 @import "../assets/styles/reset.scss";
-// @import "../assets/styles/buttons.scss";
-// @import "../assets/styles/text.scss";
 .card {
   width: 100%;
   display: flex;
@@ -116,16 +113,13 @@
     justify-content: space-between;
     border: none;
     border-bottom: 2px solid $dark-light-gray;
-    // border-bottom: 2px solid $dark-gray-light;
     background: transparent;
     font-weight: bold;
     color: $dark-light-gray;
-    // color: $dark-gray-light;
   }
 
   .actions__button--default {
     color: $second-blue;
-    // Boton subrayado Default: Open Sans Bold #5b73c1 (Active opacity 40%)
   }
   .actions__button:active {
     opacity: 40%;

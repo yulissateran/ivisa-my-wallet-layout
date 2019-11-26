@@ -53,6 +53,7 @@
 
 .nav {
   border-bottom: $border-light;
+  margin-top: 70px;
 }
 .nav > .wrapper {
   display: flex;
@@ -62,11 +63,12 @@
   position: relative;
   bottom: -1px;
   border: $border-light;
-  padding: 10px 20px;
+  padding: 10px 0;
   opacity: 0.5;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+  flex: 1;
 }
 .nav__item span {
   display: none;
@@ -81,6 +83,13 @@
   border-top: 2px solid $dark-green;
   opacity: 1;
 }
+
+
+@media only screen and (min-width: map-get($breakpoints, sm)) {
+  .nav__item {
+    padding: 10px 20px;
+  }
+}
 @media only screen and (min-width: map-get($breakpoints, lg)) {
   .nav__item span {
     display: block;
@@ -88,6 +97,7 @@
     font-size: 12px;
     font-weight: bold;
     margin-left: 10px;
+    color: $black-blue;
   }
 }
 </style>

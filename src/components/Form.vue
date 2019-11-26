@@ -1,5 +1,7 @@
 <template lang="html">
-  <form >
+
+
+  <form v-on:submit="send">
     <div class="form__body">
       <label for="cardName" class="control-lg">
         Name on Card
@@ -10,12 +12,6 @@
           type="text"
           id="cardName"
         />
-        <small
-          class="invalid-feedback"
-          v-if="$v.name.$error && !$v.name.required"
-        >
-          {{ errorMessage }}
-        </small>
       </label>
       <label for="cardNumber" class="control-lg">
         Credit / Debit Card Number
@@ -25,14 +21,20 @@
           v-model="number"
           id="cardNumber"
           type="text"
-          v-on:input="setNumberControl($event)"
+          v-on:paste="setNumberControl"
+          v-on:keyup="handleKeyUp"
+          maxLength="19"
         />
-        <!-- v-on:keyup="setNumberControl($event)" -->
         <small
           class="invalid-feedback"
-          v-if="$v.number.$error && !$v.number.required"
+          v-if="
+            $v.number.$error &&
+              !$v.number.min &&
+              this.number &&
+              this.number.length
+          "
         >
-          {{ errorMessage }}
+          Card number is too short
         </small>
       </label>
       <label for="expMonth" class="control-sm">
@@ -43,17 +45,11 @@
           v-model="expMonth"
           id="expMonth"
         >
-          <option hidden value></option>
+          <!-- <option hidden value=""></option> -->
           <option v-for="month in expMonths" :value="month" :key="month">{{
             month
           }}</option>
         </select>
-        <small
-          class="invalid-feedback"
-          v-if="$v.expMonth.$error && !$v.expMonth.required"
-        >
-          {{ errorMessage }}
-        </small>
       </label>
       <label for="expYear" class="control-sm">
         Exp. Year
@@ -63,17 +59,11 @@
           v-model="expYear"
           id="expYear"
         >
-          <option hidden value></option>
+          <!-- <option hidden value=""></option> -->
           <option v-for="year in expYears" :value="year" :key="year">{{
             year
           }}</option>
         </select>
-        <small
-          class="invalid-feedback"
-          v-if="$v.expYear.$error && !$v.expYear.required"
-        >
-          {{ errorMessage }}
-        </small>
       </label>
       <label for="securityCode" class="control-sm">
         Security code
@@ -82,13 +72,9 @@
           ref="securityCode"
           v-model="securityCode"
           type="text"
+          v-on:input="formatSecurityCode"
+
         />
-        <small
-          class="invalid-feedback"
-          v-if="$v.securityCode.$error && !$v.securityCode.required"
-        >
-          {{ errorMessage }}
-        </small>
       </label>
     </div>
     <div class="form__footer">
@@ -114,7 +100,6 @@ import { required, minLength, numeric, maxLength  } from 'vuelidate/lib/validato
     },
     data () {
       return {
-        errorMessage: 'Field required',
         formControls: [
           'name',
           'number',
@@ -156,18 +141,6 @@ import { required, minLength, numeric, maxLength  } from 'vuelidate/lib/validato
           '10',
           '11',
           '12'
-          // '01| January',
-          // '02| February',
-          // '03| March',
-          // '04| April',
-          // '05| May',
-          // '06| June',
-          // '07| July',
-          // '08| August',
-          // '09| September',
-          // '10| October',
-          // '11| November',
-          // '12| December'
         ],
         name: null,
         number: null,
@@ -182,9 +155,8 @@ import { required, minLength, numeric, maxLength  } from 'vuelidate/lib/validato
       },
   	  number: {
         required,
-        minLength: minLength(19),
+        minLength: minLength(16),
         maxLength: maxLength(19),
-        numeric
       },
       expMonth: {
         required,
@@ -194,22 +166,22 @@ import { required, minLength, numeric, maxLength  } from 'vuelidate/lib/validato
       },
        securityCode: {
         required,
+        numeric
       }
     },
-   methods: {
-     reset(){
-        this.$v.$reset()
-          this.name = null;
-            this.number = null;
-            this.expMonth = null;
-            this.expYear = null;
-            this.securityCode = null;
-     },
+    methods: {
+      reset(){
+        this.$v.$reset();
+        this.name = null;
+        this.number = null;
+        this.expMonth = null;
+        this.expYear = null;
+        this.securityCode = null;
+      },
       send() {
         this.$v.$touch();
-
-       if(!this.$v.$invalid){
-          this.$emit('send', 
+        if(!this.$v.$invalid){
+          this.$emit('send',
           {
             name: this.name,
             number: this.number,
@@ -218,44 +190,59 @@ import { required, minLength, numeric, maxLength  } from 'vuelidate/lib/validato
             securityCode: this.securityCode,
           });
           this.reset();
-       } else {
-       const firstInvalidControl = this.formControls.find(nameControl => this.$v[nameControl].$invalid);
-       this.$refs[firstInvalidControl].focus();
-       }
+        } else {
+         this.$refs[this.getFirstInvalidControl()].focus();
+        }
       },
-      getOnlyNumbers(string){
-        const iterableValue = string.split('');
-          let newValue = '';
-          iterableValue.forEach((character, index)=> {
+      getFirstInvalidControl(){
+        return this.formControls.find(nameControl => this.$v[nameControl].$invalid);
+      },
+      deleteSpaces(string){
+        return string.split(' ').join('');
+      },
+      sliceCardNumber(string){
+        if(string && string.length > 16) {
+          string = string.slice(0,20);
+        }
+        return string;
+      },
+      getIterableString(string){
+        return this.sliceCardNumber(this.deleteSpaces(string)).split('');
+      },
+      getCardNumberFormated(event, string){
+          const iterableString = this.getIterableString(string);
+          let cardNumberFormated = '';
+          iterableString.forEach((character, index)=> {
             if(!isNaN(character)){
-              newValue = newValue + character;
+              if(index < 12 && (index + 1) % 4 === 0 ){
+                cardNumberFormated += character + ' ';
+              } else {
+                cardNumberFormated += character ;
+              }
             }
           });
-          return newValue;
+          return cardNumberFormated;
       },
-      // get
-      setSpace(string){
-          const positionOfSpaces = [4, 9, 14]
-          const iterableValue = string.split('');
-          let newValue = '';
-          iterableValue.forEach((character, index)=> {
-            if(positionOfSpaces.includes(index)){
-              newValue = newValue + ' ';
-            }
-          });
-          return newValue;
+      setCardNumberFormated(event, string){
+        if(event.keyCode !== 8 && string){
+          this.number = this.getCardNumberFormated(event,string);
+        }
       },
       setNumberControl(event){
-        // let value = this.number;
-        // if(value){
-        //   if(value.length >= 20){
-        //     this.number = value.slice(0, 20)
-        //   }
-        //   value = this.number.split(' ').join('');
-        //   value = this.getOnlyNumbers(value)
-        //   value = this.setSpace(value)
-        //   this.number = value;
-        // }
+        this.setCardNumberFormated(event, this.number)
+
+      },
+      handleKeyUp(event){
+        this.setCardNumberFormated(event, this.number)
+      },
+      formatSecurityCode(){
+            let formatedSecurityCode = '';
+        this.getIterableString(this.securityCode).forEach(character=>{
+          if(!isNaN(character)){
+            formatedSecurityCode += character;
+          }
+          this.securityCode = formatedSecurityCode;
+        })
       }
     },
     computed: {
@@ -273,10 +260,11 @@ import { required, minLength, numeric, maxLength  } from 'vuelidate/lib/validato
   color: $error-color;
   position: absolute;
   bottom: -15px;
+  // font-weight: normal;
   left: 5px;
 }
 .form__body {
-  font-size: 12.5px;
+  font-size: 14px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -292,24 +280,25 @@ import { required, minLength, numeric, maxLength  } from 'vuelidate/lib/validato
   border: $border-dark;
   border-radius: $size-radius-form-controls;
   margin-top: 10px;
+  @extend .base-control;
 }
+.form__body select option {
+  text-align: center;
+}
+
 .form__body input.has-error,
 .form__body select.has-error {
   border: $border-error;
 }
 
-.form__body input:focus,
-.form__body select:focus {
-  outline: none;
-}
-.form__body input:focus.has-error,
-.form__body select:focus.has-error {
+.form__body input.has-error:focus,
+.form__body select.has-error:focus {
   outline: none;
   border: $border-error;
+  box-shadow: $box-shadow-error;
 }
 
 label {
-  font-size: 14px;
   font-weight: bold;
   font-family: $font-family-secondary;
   text-align: start;
@@ -334,6 +323,7 @@ form button {
   .form__body {
     display: flex;
     flex-direction: row;
+    font-size: 13.3px;
   }
   .form__body label + label {
     margin-left: 15px;

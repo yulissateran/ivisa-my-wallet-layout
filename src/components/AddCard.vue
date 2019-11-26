@@ -71,7 +71,7 @@ import Form from "./Form.vue";
   @extend .light-title;
 }
 .add-card__body {
-  padding: 26px 25px;
+  padding: 25px 20px;
   border-top: $border-light;
 }
 .add-card__header {
@@ -106,7 +106,12 @@ import Form from "./Form.vue";
   width: 34px;
   height: 35px;
 }
+@media only screen and (min-width: map-get($breakpoints, sm)) {
 
+.add-card__body {
+  padding: 25px;
+}
+}
 @media only screen and (min-width: map-get($breakpoints, md)) {
   .add-card__header {
     display: flex;
