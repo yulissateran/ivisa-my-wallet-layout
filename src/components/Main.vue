@@ -36,7 +36,4 @@ import Navbar from "./Navbar.vue";
 </script>
 
 <style scoped lang="scss">
-  .src-components-main {
-
-  }
 </style>

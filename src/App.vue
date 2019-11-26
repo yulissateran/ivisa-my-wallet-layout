@@ -1,4 +1,6 @@
-<template>
+
+/*this is a single file component , the navigator don´t know it for that, the
+CLI do it*/<template>
   <!-- <div id="app"> -->
       <Main/>
   <!-- </div> -->
@@ -24,14 +26,7 @@ export default {
 
 /* font-family: 'Roboto', sans-serif;
 font-family: 'Open Sans', sans-serif; */
-#app {
-  /* font-family: 'Open Sans', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px; */
-}
+
 .container {
   padding: 0 10px;
 }

@@ -1,6 +1,7 @@
 <template lang="html">
   <div class="container-modal">
-    <div>
+    mooodal
+    <!-- <div> -->
       <div class="modal">
         <div class="modal__header">
           <span v-on:click="close">&times;</span>
@@ -23,11 +24,13 @@
           <button v-on:click="calcelAction"  type="button" class="cancel-change-default">Cancel</button>
         </div>
       </div>
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 
 <script lang="js">
+/* eslint-disable */
+
   export default  {
     name: 'modal',
       props: {
@@ -36,6 +39,7 @@
           default: 'remove',
           required: true,
           validator(value) {
+            console.log(value)
             const permitedActions = ['remove', 'changeToDefault'];
           return permitedActions.indexOf(value) !== -1
       }
@@ -92,14 +96,14 @@
 
 <style scoped lang="scss">
 @import "../assets/styles/variables.scss";
+@import "../assets/styles/variables-grid.scss";
 @import "../assets/styles/reset.scss";
 @import "../assets/styles/buttons.scss";
 @import "../assets/styles/text.scss";
-.container-modal {
-  z-index: 1000;
+
+.container-modal  {
+   z-index: 1000;
   position: fixed;
-}
-.container-modal > div {
   height: 100vh;
   width: 100vw;
   background-color: rgba(44, 49, 67, 0.35);

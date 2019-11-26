@@ -1,28 +1,37 @@
 <template class="">
-      <div class="wrapper">
-            <div class="wallet">
-        <div class="wallet__cards">
-          <div class="title">
-            <h2>My Cards</h2>
-          </div>
-          <div class="container-cards">
-            <Card />
-          </div>
+  <div class="wrapper">
+    <div class="wallet">
+      <div class="wallet__cards">
+        <div class="title">
+          <h2>My Cards</h2>
         </div>
-        <Add-card/>
+        <div v-if="cards.length" class="container-cards">
+          <Card
+            v-for="card in cards"
+            :key="card.name"
+            v-bind="{ ...card, defaultCardName }"
+            v-on:remove="handleRemove"
+            v-on:changeToDefault="handleChangeToDefault"
+          />
+        </div>
       </div>
-        </div>
+      <Add-card v-on:newCard="addCard" />
+    </div>
+    <Modal  v-bind:is="modal.isVisible" :type="modal.type" v-on:close="closeModal" v-on:do="doActionInCard" />
+  </div>
 </template>
 
 <script lang="js">
 import Card from "./Card.vue";
+import Modal from "./Modal.vue";
 import AddCard from "./AddCard.vue";
-
+/* eslint-disable */
   export default  {
-    name: 'src-components-wallet',
+    name: 'Wallet',
     components: {
     Card,
-    AddCard
+    AddCard,
+    Modal
     },
     props: [],
     mounted () {
@@ -30,11 +39,59 @@ import AddCard from "./AddCard.vue";
     },
     data () {
       return {
-
+        defaultCardName: 'American Express',
+        selectedCardName: null,
+        cards: [
+          {
+            name: 'American Express',
+            number: '.... .... .... 4536',
+            expMonth: '12',
+            expYear: '2019',
+            securityCode: 386,
+          }
+        ],
+        modal: {
+          isVisible: false,
+          type: 'remove'
+        }
       }
     },
     methods: {
-
+       addCard(event){
+         this.cards.push(event)
+       },
+       
+       handleRemove(name){
+        this.selectedCardName = name;
+         this.openModal('remove')
+       },
+         handleChangeToDefault(name){
+        this.selectedCardName = name;
+         this.openModal('changeToDefault')
+       },
+       removeCard(name){
+         this.cards = this.cards.filter(card=>card.name !== name);
+       },
+       changeToDefault(name){
+         this.defaultCardName = name;
+       },
+       doActionInCard(action){
+          switch (action) {
+            case 'remove':
+              this.removeCard(this.selectedCardName);
+              break;
+              case 'changeToDefault':
+              this.changeToDefault(this.selectedCardName);
+              break;
+          }
+       },
+       openModal(action){
+         this.modal.action = action;
+         this.modal.isVisible = true;
+       },
+       closeModal(){
+         this.modal.isVisible = false;
+       }
     },
     computed: {
 
@@ -48,8 +105,6 @@ import AddCard from "./AddCard.vue";
 @import "../assets/styles/reset.scss";
 @import "../assets/styles/buttons.scss";
 @import "../assets/styles/text.scss";
-
-
 
 .wallet__cards {
   margin-top: 50px;

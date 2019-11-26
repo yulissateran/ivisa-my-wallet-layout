@@ -1,7 +1,7 @@
-<template lang="html">
+      <!-- <img class="ok-icon" src="../assets/images/ok-grey-ico.svg" alt /> -->
+<!-- <template lang="html">
   <div class="card">
     <div class="card__icon">
-      <!-- <img class="ok-icon" src="../assets/images/ok-grey-ico.svg" alt /> -->
       <img class="ok-icon" src="../assets/images/ok-green-ico.svg" alt />
     </div>
     <div class="card__body">
@@ -23,15 +23,38 @@
       </div>
     </div>
   </div>
+</template> -->
+<template lang="html">
+  <div class="card">
+    <div class="card__icon">
+      <img v-if="isDefault" class="ok-icon" src="../assets/images/ok-green-ico.svg" alt="" />
+      <img v-if="!isDefault" class="ok-icon" src="../assets/images/ok-grey-ico.svg" alt />
+    </div>
+    <div class="card__body">
+      <div class="container-img">
+        <img src="../assets/images/visa-card-logo.svg" alt />
+      </div>
+      <div class="description">
+        <span class="description__title">{{name}} {{number}}</span>
+        <span class="description__subtitle">Ex.Date: {{expMonth}}/{{expYear}}</span>
+      </div>
+      <div class="actions">
+        <button v-on:click="handleRemove" class="actions__button actions__button--remove">Remove</button>
+        <button v-on:click="handleChangeToDefault"  class="actions__button actions__button--default">
+          Default
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="js">
-
+/* eslint-disable */
   export default  {
-    name: 'card',
-    props: [],
+    name: 'Card',
+    props: [ 'name', 'number', 'expMonth','expYear', 'defaultCardName'],
     mounted () {
-
+      console.log(this)
     },
     data () {
       return {
@@ -39,10 +62,17 @@
       }
     },
     methods: {
-
+      handleChangeToDefault(){
+        this.$emit('changeToDefault', this.name)
+      },
+      handleRemove(){
+        this.$emit('remove', this.name)
+      }
     },
     computed: {
-
+      isDefault(){
+        return this.defaultCardName === this.name;
+      }
     }
 }
 </script>
