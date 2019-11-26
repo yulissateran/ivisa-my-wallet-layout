@@ -39,7 +39,6 @@
           class="actions__button actions__button--default"
         >Default
         </button>
-
         <button
         v-if="!isDefault"
           v-on:click="handleChangeToDefault"
