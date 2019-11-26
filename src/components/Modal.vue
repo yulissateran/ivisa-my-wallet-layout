@@ -1,30 +1,27 @@
 <template lang="html">
   <div class="container-modal">
-    mooodal
-    <!-- <div> -->
       <div class="modal">
         <div class="modal__header">
           <span v-on:click="close">&times;</span>
         </div>
         <div class="modal__body">
           <div class="modal__body--img">
-            <img class="icon" :src="icon" :alt="action.iconDescription" />
+            <img class="icon" :src="icon" :alt="iconDescription" />
           </div>
           <div class="modal__body--description">
             <span class="modal__body--title">
-              {{ action.title }}
+              {{ title }}
             </span>
             <p>
-              {{ action.message }}
+              {{ message }}
             </p>
           </div>
         </div>
         <div class="modal__footer">
           <button v-on:click="doAction" type="button" class="change-default">Yes</button>
-          <button v-on:click="calcelAction"  type="button" class="cancel-change-default">Cancel</button>
+          <button v-on:click="calcel"  type="button" class="cancel-change-default">Cancel</button>
         </div>
       </div>
-    <!-- </div> -->
   </div>
 </template>
 
@@ -33,62 +30,35 @@
 
   export default  {
     name: 'modal',
-      props: {
-        type: {
-          type: String,
-          default: 'remove',
-          required: true,
-          validator(value) {
-            console.log(value)
-            const permitedActions = ['remove', 'changeToDefault'];
-          return permitedActions.indexOf(value) !== -1
-      }
-        },
-  }
-    ,
+    props: ['type',
+            'title',
+            'message',
+            'iconSource',
+            'iconDescription'
+    ],
     // mounted () {
 
     // },
     data () {
       return {
-      actions :{
-      remove: {
-      title: 'Remove card',
-      message: 'Are you sure you want to remove from wallet?',
-      iconSource:'remove-payment-ico.svg',
-      iconDescription:''
-      },
-      changeToDefault :{
-      title: 'Change default card',
-      message: `This card will appear
-                as a primary option for your payment.
-                Are you sure you want
-                to set this card
-                as default?`,
-      iconSource:'default-card-ico.svg',
-      iconDescription:''
-      }
-    }
+
       }
     },
     methods: {
      close() {
         this.$emit('close');
      },     
-     calcelAction() {
+     calcel() {
        this.close();
      },
      doAction() {
-        this.$emit(this.type);
-      alert('doAction!!');
+        this.$emit('do',this.type);
+        console.log(this.type)
      }
     },
     computed: {
-     action() {
-      return this.actions[this.type]
-     },
      icon() {
-          return require('../assets/images/' + this.action.iconSource) // the module request
+          return require('../assets/images/' + this.iconSource) // the module request
      }
     }
 }
@@ -109,6 +79,7 @@
   background-color: rgba(44, 49, 67, 0.35);
   top: 0;
   bottom: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;

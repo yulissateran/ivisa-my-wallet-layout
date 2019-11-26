@@ -1,0 +1,8 @@
+{
+  "proyectos": {
+    "default": "ivisa-my-wallet"
+  },
+  "projects": {
+    "ivisa-my-wallet": "ivisa-my-wallet"
+  }
+}

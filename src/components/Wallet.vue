@@ -17,7 +17,13 @@
       </div>
       <Add-card v-on:newCard="addCard" />
     </div>
-    <Modal  v-bind:is="modal.isVisible" :type="modal.type" v-on:close="closeModal" v-on:do="doActionInCard" />
+    <Modal
+      v-if="modal.isVisible"
+      v-bind="currentModal"
+      v-on:close="closeModal"
+      v-on:do="doActionInCard"
+    />
+    <!-- <Modal   :type="modal.type" v-on:close="closeModal" v-on:do="doActionInCard" /> -->
   </div>
 </template>
 
@@ -41,6 +47,7 @@ import AddCard from "./AddCard.vue";
       return {
         defaultCardName: 'American Express',
         selectedCardName: null,
+        currentModal: null,
         cards: [
           {
             name: 'American Express',
@@ -52,7 +59,26 @@ import AddCard from "./AddCard.vue";
         ],
         modal: {
           isVisible: false,
-          type: 'remove'
+          actions : {
+            remove: {
+            type: 'remove',
+            title: 'Remove card',
+            message: 'Are you sure you want to remove from wallet?',
+            iconSource:'remove-payment-ico.svg',
+            iconDescription:''
+            },
+            changeToDefault :{
+              type: 'changeToDefault',
+              title: 'Change default card',
+              message: `This card will appear
+                as a primary option for your payment.
+                Are you sure you want
+                to set this card
+                as default?`,
+              iconSource:'default-card-ico.svg',
+              iconDescription:''
+            }
+          }
         }
       }
     },
@@ -60,7 +86,7 @@ import AddCard from "./AddCard.vue";
        addCard(event){
          this.cards.push(event)
        },
-       
+
        handleRemove(name){
         this.selectedCardName = name;
          this.openModal('remove')
@@ -76,6 +102,7 @@ import AddCard from "./AddCard.vue";
          this.defaultCardName = name;
        },
        doActionInCard(action){
+         console.log(action)
           switch (action) {
             case 'remove':
               this.removeCard(this.selectedCardName);
@@ -84,10 +111,12 @@ import AddCard from "./AddCard.vue";
               this.changeToDefault(this.selectedCardName);
               break;
           }
+          this.closeModal();
        },
        openModal(action){
-         this.modal.action = action;
-         this.modal.isVisible = true;
+         console.log('action', action)
+         this.currentModal = this.modal.actions[action];
+         this.$set(this.modal, 'isVisible', true)
        },
        closeModal(){
          this.modal.isVisible = false;
