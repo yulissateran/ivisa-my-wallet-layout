@@ -11,7 +11,7 @@
           v-model="name"
           type="text"
           id="cardName"
-          maxLength="25"
+          maxLength="35"
           v-on:blur="setFormatName"
         />
       </label>
@@ -31,12 +31,12 @@
           class="invalid-feedback"
           v-if="
             $v.number.$error &&
-              !$v.number.min && $v.number.max &&
+              !$v.number.min && 
               this.number &&
               this.number.length
           "
         >
-          Card number is too short
+          Invalid card number
         </small>
       </label>
       <label for="expMonth" class="control-sm">
