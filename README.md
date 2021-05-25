@@ -1,2 +1,4 @@
+Billetera digital que te permite guardar tus tarjetas freuentes para realizar tus pagos facilmente en la plataforma de servicos de visa agilizados: Ivisa.
 
-Pequeña sección de My Wallet donde el usuario puede adjuntar tarjetas, hacer la que quiere default y eliminar la que no quiere tener registrada.
+
+![image](https://user-images.githubusercontent.com/39315997/119434147-305b0d80-bcdd-11eb-9906-d39bd4b42b5d.png)
